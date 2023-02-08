@@ -1,0 +1,23 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Excel</title>
+</head>
+<body>
+
+    <div class="row">
+
+    <form method="post" asp-action="Index" enctype="multipart/form-data">
+        <label>Upload Excel File :</label>
+        <input type="file" name="formFile" accept=".csv,.xls,.xlsx" />
+        <input type="submit" class="btn btn-primary" value="Upload" />
+    </form>
+    </div>
+
+
+    <a asp-action="GetExcelData" class="btn btn-danger" >Get All Data</a>
+
+</body>
+</html>

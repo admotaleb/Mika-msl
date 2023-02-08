@@ -1,0 +1,45 @@
+﻿@model Msl.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Active";
+}
+
+<br />
+
+<h2 class="text-info">User Active</h2>
+
+
+
+
+<form asp-action="Active" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+
+    <div class="text-primary">
+        <input asp-for="Id" value="@Model.Id" type="hidden" />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="UserName"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="UserName" readonly />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Email"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="Email" readonly />
+        </div>
+    </div>
+
+
+    <div>
+
+        <input type="submit" value="Active" />
+        <a asp-action="Index" class="btn btn-primary">Back</a>
+    </div>
+
+</form>

@@ -1,0 +1,28 @@
+﻿@using Msl.Models
+@model IEnumerable<ExcelUp>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td> @item.Email</td>
+            </tr>
+        }
+
+    </tbody>
+    <a asp-action="DeleteExcelData" class="btn btn-danger">Delete All Data</a>
+    <a asp-action="Index" class="btn btn-primary">Back</a>
+</table>

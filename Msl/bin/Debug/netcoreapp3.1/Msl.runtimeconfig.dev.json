@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\motaleb.MIKA\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\motaleb.MIKA\\.nuget\\packages"
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+﻿@model Msl.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<br />
+
+<h2 class="text-info">Add User</h2>
+
+
+
+
+<form asp-action="Create" method="post" id="user-form" enctype="multipart/form-data" class="">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+    @* <div class="text-primary">
+    @ViewBag.SaveSucceeded
+    </div>*@
+    
+        <div class="row">
+            <div class="col-3">
+                <label asp-for="UserName"></label>
+            </div>
+            <div class="col-2">
+                <label asp-for="Email"></label>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-3">
+                <input asp-for="UserName" />
+            </div>
+            <div class="col-3">
+                <input asp-for="Email" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label asp-for="PhoneNumber"></label>
+            </div>
+            <div class="col-2">
+                <label asp-for="BranchName"></label>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-3">
+                <input asp-for="PhoneNumber" />
+            </div>
+            <div class="col-3">
+                <input asp-for="BranchName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label asp-for="Tws"></label>
+            </div>
+            <div class="col-2">
+                <label asp-for="PasswordHash"></label>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-3">
+                <input asp-for="Tws" />
+            </div>
+            <div class="col-3">
+                <input asp-for="PasswordHash" type="password" />
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-1">
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+            <div class="col-1">
+                <a asp-action="Index" class="btn btn-primary">Back</a>
+            </div>
+
+        </div>
+    
+</form>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#user-form").validate({
+                rules: {
+                    UserName: {
+                        required: true,
+
+                    },
+
+                    PasswordHash: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    UserName: "Invalid Name",
+                    PasswordHash: "Invalid Password",
+                },
+            });
+        });
+
+    </script>
+}
+
+

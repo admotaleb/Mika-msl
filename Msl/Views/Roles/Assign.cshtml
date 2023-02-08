@@ -1,0 +1,66 @@
+﻿@model Msl.Models.UserAssignVM;
+
+@{
+    ViewData["Title"] = "Assing";
+}
+
+<br />
+
+<h2 class="text-info">Add Assing</h2>
+
+
+
+
+<form asp-action="Assign" method="post" id="user-form" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+     <div class="text-primary">
+        @ViewBag.Msg
+    </div>
+      <div class="row">
+        <div class="col-2">
+            <label asp-for="UserId"></label>
+        </div>
+        <div class="col-4">
+            <select asp-for="UserId" asp-items="ViewBag.UserId"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="RoleId"></label>
+        </div>
+        <div class="col-4">
+            
+            <select asp-for="RoleId" asp-items="ViewBag.RoleId"></select>
+        </div>
+    </div>
+
+    <div>
+        <input type="submit" class="btn btn-success" value="Save" />
+        <a asp-action="Index">Back</a>
+    </div>
+
+</form>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#role-form").validate({
+                rules: {
+                    Name: {
+                        required: true,
+
+                    },
+
+
+                },
+                messages: {
+                    UserName: "Invalid Name",
+
+                },
+            });
+        });
+
+    </script>
+}
+
+

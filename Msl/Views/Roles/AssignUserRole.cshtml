@@ -1,0 +1,22 @@
+﻿
+<a asp-action="" class="btn btn-success">Add Role</a>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Role Name</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in ViewBag.UserRole)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.RoleName</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

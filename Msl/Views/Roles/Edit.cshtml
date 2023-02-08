@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Create";
+}
+
+<br />
+
+<h2 class="text-info">Edit Role</h2>
+
+
+
+
+<form asp-action="Edit" method="post" id="user-form" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+    @* <div class="text-primary">
+    @ViewBag.SaveSucceeded
+    </div>*@
+    <input type="hidden" name="@ViewBag.id"/>
+    <div class="row">
+        <h2>@ViewBag.IsExist</h2>
+        <div class="col-2">
+            <label>Role Name</label>
+        </div>
+        <div class="col-4">
+            
+            <input id="name" name="name" value="@ViewBag.role" />
+        </div>
+    </div>
+
+    <div>
+        <input type="submit" class="btn btn-success" value="Update" />
+        <a asp-action="Index">Back</a>
+    </div>
+
+</form>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#role-form").validate({
+                rules: {
+                    Name: {
+                        required: true,
+
+                    },
+
+
+                },
+                messages: {
+                    UserName: "Invalid Name",
+
+                },
+            });
+        });
+
+    </script>
+}
+
+

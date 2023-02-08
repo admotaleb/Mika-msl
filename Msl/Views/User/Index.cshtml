@@ -1,0 +1,43 @@
+﻿@using Msl.Models
+
+@model IEnumerable<ApplicationUser>
+<a asp-action="Create" class="btn btn-success">Add user</a>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                
+                    @if (item.LockoutEnd > DateTime.Now && item.LockoutEnd!=null){
+
+                    <td>Inactive</td>
+                    <td> <a asp-action="Active" class="btn btn-primary" asp-route-id="@item.Id">Active</a></td>
+                    <td> <a asp-action="Delete" class="btn btn-success" asp-route-id="@item.Id">Delete</a></td>
+
+                }
+                else
+                {
+                    <td>active</td>
+                    <td> <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.Id">Edit</a></td>
+                    <td> <a asp-action="Details" class="btn btn-success" asp-route-id="@item.Id">Details</a></td>
+                    <td> <a asp-action="LockOut" class="btn btn-danger" asp-route-id="@item.Id">Lockout</a></td>
+                }
+
+                
+                
+            </tr>
+        }
+
+    </tbody>
+</table>
