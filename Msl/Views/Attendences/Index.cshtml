@@ -1,0 +1,158 @@
+﻿@model IEnumerable<Msl.Models.Attendence>
+@using System.Net.Http;
+@using Microsoft.AspNetCore.Http;
+@using Msl.Models;
+
+
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userInfo = HttpContextAccessor.HttpContext.Session.GetString("roleName");
+}
+
+@{
+    ViewData["Title"] = "Attendence";
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-success rounded-circle"> Attendence </a>
+</p>
+<table class="table table-striped" id="myTableAttendence">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckInReason)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.CheckOut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckOutReason)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.PrivateIp)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.PublicIp)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.HostName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.BranchName)
+            </th>*@
+            @if (userInfo == "Admin")
+            {
+                <th>
+                    
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    <h6>@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</h6>
+                     @*@Html.DisplayFor(modelItem => item.ApplicationUser.BranchName)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckInReason)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOutReason)
+            </td>
+               @* <td>
+                    @Html.DisplayFor(modelItem => item.PrivateIp)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublicIp)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.HostName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Latitude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longitude)
+                </td>*@
+           @* <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.BranchName)
+            </td>*@
+                @if (userInfo == "Admin")
+                {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a>*@ |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td> 
+                }
+                
+                <td></td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var today = new Date().toISOString().split('T')[0];
+            $('#myTableAttendence').DataTable({
+
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: today
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: today
+                    }
+
+
+                ]
+
+            }
+
+
+            );
+        });
+
+    </script>
+}

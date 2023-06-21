@@ -1,0 +1,188 @@
+﻿@model Msl.Models.Educational
+
+@{
+    ViewData["Title"] = "Educational Edit";
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<h4>Educational</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            @*Collapse Start*@
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                ssc
+                            </a>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="SscExam" class="control-label"></label>
+                                <input asp-for="SscExam" class="form-control" />
+                                <span asp-validation-for="SscExam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SscSubject" class="control-label"></label>
+                                <input asp-for="SscSubject" class="form-control" />
+                                <span asp-validation-for="SscSubject" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SscInstitute_Name" class="control-label"></label>
+                                <input asp-for="SscInstitute_Name" class="form-control" />
+                                <span asp-validation-for="SscInstitute_Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SscPassing_Year" class="control-label"></label>
+                                <input asp-for="SscPassing_Year" class="form-control" />
+                                <span asp-validation-for="SscPassing_Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SscResult" class="control-label"></label>
+                                <input asp-for="SscResult" class="form-control" />
+                                <span asp-validation-for="SscResult" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Hsc
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="HscExam" class="control-label"></label>
+                                <input asp-for="HscExam" class="form-control" />
+                                <span asp-validation-for="HscExam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HscSubject" class="control-label"></label>
+                                <input asp-for="HscSubject" class="form-control" />
+                                <span asp-validation-for="HscSubject" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HscInstitute_Name" class="control-label"></label>
+                                <input asp-for="HscInstitute_Name" class="form-control" />
+                                <span asp-validation-for="HscInstitute_Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HscPassing_Year" class="control-label"></label>
+                                <input asp-for="HscPassing_Year" class="form-control" />
+                                <span asp-validation-for="HscPassing_Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HscResult" class="control-label"></label>
+                                <input asp-for="HscResult" class="form-control" />
+                                <span asp-validation-for="HscResult" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Honors
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="HonorsExam" class="control-label"></label>
+                                <input asp-for="HonorsExam" class="form-control" />
+                                <span asp-validation-for="HonorsExam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HonorsSubject" class="control-label"></label>
+                                <input asp-for="HonorsSubject" class="form-control" />
+                                <span asp-validation-for="HonorsSubject" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HonorsInstitute_Name" class="control-label"></label>
+                                <input asp-for="HonorsInstitute_Name" class="form-control" />
+                                <span asp-validation-for="HonorsInstitute_Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HonorsPassing_Year" class="control-label"></label>
+                                <input asp-for="HonorsPassing_Year" class="form-control" />
+                                <span asp-validation-for="HonorsPassing_Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HonorsResult" class="control-label"></label>
+                                <input asp-for="HonorsResult" class="form-control" />
+                                <span asp-validation-for="HonorsResult" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h5 class="mb-0">
+                            <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Masters
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="MastersExam" class="control-label"></label>
+                                <input asp-for="MastersExam" class="form-control" />
+                                <span asp-validation-for="MastersExam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MastersSubject" class="control-label"></label>
+                                <input asp-for="MastersSubject" class="form-control" />
+                                <span asp-validation-for="MastersSubject" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MastersInstitute_Name" class="control-label"></label>
+                                <input asp-for="MastersInstitute_Name" class="form-control" />
+                                <span asp-validation-for="MastersInstitute_Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MastersPassing_Year" class="control-label"></label>
+                                <input asp-for="MastersPassing_Year" class="form-control" />
+                                <span asp-validation-for="MastersPassing_Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MastersResult" class="control-label"></label>
+                                <input asp-for="MastersResult" class="form-control" />
+                                <span asp-validation-for="MastersResult" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Collapse End*@
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

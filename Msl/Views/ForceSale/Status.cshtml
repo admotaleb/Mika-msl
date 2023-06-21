@@ -1,0 +1,43 @@
+﻿@model Msl.Models.ForceSale
+
+
+@{
+    ViewData["Title"] = "Status";
+}
+
+<br />
+
+<h2 class="text-info">Update Status</h2>
+
+
+
+
+<form asp-action="Status" method="post"  enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+    
+    <div class="text-primary">
+        <input asp-for="Id" value="@Model.Id" type="hidden" />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Status"></label>
+        </div>
+        <div class="col-4">
+            <select asp-for="Status">
+                <option value="Deposit">Deposit</option>
+                <option value="Tomorrow Adjust">Tomorrow Adjust</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-success" value="Update" />
+        <a asp-action="GetExcelData" class="btn btn-primary">Back</a>
+    </div>
+
+</form>
+@section Scripts{
+    
+}
+
+

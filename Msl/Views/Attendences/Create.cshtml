@@ -1,0 +1,77 @@
+﻿@model Msl.Models.Attendence
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Attendence</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="CheckIn" class="control-label"></label>
+                <input asp-for="CheckIn" class="form-control" />
+                <span asp-validation-for="CheckIn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CheckInReason" class="control-label"></label>
+                <input asp-for="CheckInReason" class="form-control" />
+                <span asp-validation-for="CheckInReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CheckOut" class="control-label"></label>
+                <input asp-for="CheckOut" class="form-control" />
+                <span asp-validation-for="CheckOut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CheckOutReason" class="control-label"></label>
+                <input asp-for="CheckOutReason" class="form-control" />
+                <span asp-validation-for="CheckOutReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Present" class="control-label"></label>
+                <input asp-for="Present" class="form-control" />
+                <span asp-validation-for="Present" class="text-danger"></span>
+            </div>*@
+            <div class="form-group d-none">
+                <label asp-for="PublicIp" class="control-label"></label>
+                <input asp-for="PublicIp" class="form-control" id="IpGet" readonly />
+                <span asp-validation-for="PublicIp" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none" >
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <select asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="CheckIn" class="btn btn-success rounded-circle" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+
+    
+
+        <script>
+            $.getJSON("https://api.ipify.org?format=json", function(data) {
+                document.getElementById("IpGet").value = data.ip;
+            })
+         </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

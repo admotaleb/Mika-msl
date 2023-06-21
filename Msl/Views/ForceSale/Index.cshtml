@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Force Sale";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Force Sale</title>
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-8">
+        <form method="post" asp-action="Index" enctype="multipart/form-data">
+            
+                <label class="font-weight-bold">Upload Excel File :</label>
+                <input type="file" name="formFile" accept=".csv,.xls,.xlsx" />
+                <label class="text-danger">@ViewBag.Massage</label>
+                <input type="submit" class="btn btn-primary" value="Upload" />
+            
+        </form>
+    </div>
+        <div class="col-2">
+            <a asp-action="GetExcelData" class="btn btn-info">Get All Data</a>
+        </div>
+    </div>
+
+
+    
+
+</body>
+</html>

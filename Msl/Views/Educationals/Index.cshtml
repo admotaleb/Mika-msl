@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Msl.Models.Educational>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userInfo = HttpContextAccessor.HttpContext.Session.GetString("roleName");
+}
+
+@{
+    ViewData["Title"] = "Educational";
+}
+
+
+
+<p>
+    <a asp-action="Create" class="nav-link d-inline"> <i class="fa-solid fa-plus"></i> Add Educational info</a>
+    <a class="nav-link d-inline" asp-area="" asp-controller="Employee_Details" asp-action="Index">Back to List</a>
+</p>
+<table class="table" id="myTableEducational">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SscExam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SscSubject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SscInstitute_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SscPassing_Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SscResult)
+            </th>
+            
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SscExam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SscSubject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SscInstitute_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SscPassing_Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SscResult)
+            </td>
+                @if (userInfo == "Admin")
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                }
+
+
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var today = new Date().toISOString().split('T')[0];
+            $('#myTableEducational').DataTable({
+
+            }
+            );
+        });
+
+    </script>
+}

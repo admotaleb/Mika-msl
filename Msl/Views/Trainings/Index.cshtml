@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Msl.Models.Training>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userInfo = HttpContextAccessor.HttpContext.Session.GetString("roleName");
+}
+
+@{
+    ViewData["Title"] = "Training";
+}
+
+<p>
+    <a asp-action="Create" class="nav-link d-inline"> <i class="fa-solid fa-plus"></i> Training info</a>
+    <a class="nav-link d-inline" asp-area="" asp-controller="Employee_Details" asp-action="Index">Back to List</a>
+</p>
+<table class="table" id="myTableTraining">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Institute)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Institute)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.To)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+                @if (userInfo == "Admin")
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                }
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var today = new Date().toISOString().split('T')[0];
+            $('#myTableTraining').DataTable({
+
+            }
+            );
+        });
+
+    </script>
+}

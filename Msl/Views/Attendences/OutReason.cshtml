@@ -1,0 +1,99 @@
+﻿@model Msl.Models.Attendence
+
+@{
+    ViewData["Title"] = "Check Out Reason";
+}
+
+<h1>Check Out Reason</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="OutReason">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group d-none">
+                <label asp-for="CheckIn" class="control-label"></label>
+                <input asp-for="CheckIn" class="form-control" readonly />
+                <span asp-validation-for="CheckIn" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="CheckInReason" class="control-label"></label>
+                <input asp-for="CheckInReason" class="form-control" readonly />
+                <span asp-validation-for="CheckInReason" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" readonly />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="CheckOut" class="control-label"></label>
+                <input asp-for="CheckOut" class="form-control"  />
+                <span asp-validation-for="CheckOut" class="text-danger"></span>
+            </div>
+            <div class="form-group ">
+                <label asp-for="CheckOutReason" class="control-label"></label>
+                <input asp-for="CheckOutReason" class="form-control"  />
+                <span asp-validation-for="CheckOutReason" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="Present" class="control-label"></label>
+                <input asp-for="Present" class="form-control" readonly />
+                <span asp-validation-for="Present" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="PrivateIp" class="control-label"></label>
+                <input asp-for="PrivateIp" class="form-control" readonly />
+                <span asp-validation-for="PrivateIp" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="PublicIp" class="control-label"></label>
+                <input asp-for="PublicIp" class="form-control" readonly />
+                <span asp-validation-for="PublicIp" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="HostName" class="control-label"></label>
+                <input asp-for="HostName" class="form-control" readonly />
+                <span asp-validation-for="HostName" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" readonly />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="Latitude" class="control-label"></label>
+                <input asp-for="Latitude" class="form-control" readonly />
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="Longitude" class="control-label"></label>
+                <input asp-for="Longitude" class="form-control" readonly />
+                <span asp-validation-for="Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="BranceSettingBranceId" class="control-label"></label>
+                <select asp-for="BranceSettingBranceId" class="form-control" asp-items="ViewBag.BranceId"></select>
+                <span asp-validation-for="BranceSettingBranceId" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <select asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success rounded-circle" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

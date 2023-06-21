@@ -1,0 +1,164 @@
+﻿@model Msl.Models.Educational
+
+@{
+    ViewData["Title"] = "Educational Details";
+}
+
+<a asp-action="Index">Back to List</a>
+
+<div>
+    <h4>Educational</h4>
+    <hr />
+    <dl class="row">
+        
+           <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ApplicationUser.FastName)
+            @Html.DisplayFor(model => model.ApplicationUser.LastName)
+        </dd>
+        @if (Model.SscExam != null)
+        {
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SscExam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SscExam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SscSubject)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SscSubject)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SscInstitute_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SscInstitute_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SscPassing_Year)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SscPassing_Year)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SscResult)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SscResult)
+        </dd>
+            <hr />
+        }
+        
+        @if(Model.HscExam !=null ){
+
+       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HscExam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HscExam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HscSubject)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HscSubject)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HscInstitute_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HscInstitute_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HscPassing_Year)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HscPassing_Year)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HscResult)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HscResult)
+        </dd>
+            <hr />
+        }
+        @if (Model.HonorsExam != null)
+        {
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HonorsExam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HonorsExam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HonorsSubject)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HonorsSubject)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HonorsInstitute_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HonorsInstitute_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HonorsPassing_Year)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HonorsPassing_Year)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HonorsResult)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HonorsResult)
+        </dd>
+            <hr />
+        }
+        @if (Model.MastersExam != null)
+        {
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MastersExam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MastersExam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MastersSubject)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MastersSubject)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MastersInstitute_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MastersInstitute_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MastersPassing_Year)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MastersPassing_Year)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MastersResult)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MastersResult)
+        </dd>
+            <hr />
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Update</a> 
+    
+</div>

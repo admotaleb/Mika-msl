@@ -1,0 +1,41 @@
+﻿@using Msl.Models
+@using System.Net.Http;
+@using Microsoft.AspNetCore.Http;
+@model IEnumerable<ExcelUp>
+
+
+
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userInfo = HttpContextAccessor.HttpContext.Session.GetString("roleName");
+}
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td> @item.Email</td>
+            </tr>
+        }
+
+    </tbody>
+    @if (userInfo=="Admin")
+    {
+    <a asp-action="DeleteExcelData" class="btn btn-danger">Delete All Data</a>
+    }
+    
+    <a asp-action="Index" class="btn btn-primary">Back</a>
+</table>

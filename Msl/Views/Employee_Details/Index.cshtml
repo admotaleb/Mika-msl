@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Msl.Models.Employee_Details>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userInfo = HttpContextAccessor.HttpContext.Session.GetString("roleName");
+}
+
+@{
+    ViewData["Title"] = "Employee";
+}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                 <a class="nav-link" asp-action="Create"> <i class="fa-solid fa-plus"></i> Employee Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Educationals" asp-action="Index"><i class="fa-solid fa-plus"></i> Educational</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Nominees" asp-action="Index"><i class="fa-solid fa-plus"></i> Nominees</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Trainings" asp-action="Index"><i class="fa-solid fa-plus"></i> Trainings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Employments" asp-action="Index"><i class="fa-solid fa-plus"></i> Employment History</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<table class="table" id="myTableEmployee_Details">
+      
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Desgnation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contact_No_Personal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department.Name)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Desgnation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact_No_Personal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+                @if (userInfo=="Admin")
+                {
+                 <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                  </td>
+                }
+                else
+                {
+                     <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                }
+                
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var today = new Date().toISOString().split('T')[0];
+            $('#myTableEmployee_Details').DataTable({
+
+            }
+            );
+        });
+
+    </script>
+}

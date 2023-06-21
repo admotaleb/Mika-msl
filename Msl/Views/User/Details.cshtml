@@ -1,0 +1,67 @@
+﻿@model Msl.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<br />
+
+<h2 class="text-info">User Detais</h2>
+
+
+
+
+<form asp-action="" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+
+    <div class="text-primary">
+        <input asp-for="Id"  value="@Model.Id" type="hidden" />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="UserName"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="UserName" readonly />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Email"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="Email" readonly />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="PhoneNumber"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="PhoneNumber" readonly />
+        </div>
+    </div>
+    @*<div class="row">
+        <div class="col-2">
+            <label asp-for="BranceSetting.Name"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="BranceSetting.Name" readonly />
+        </div>
+    </div>*@
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Tws"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="Tws" readonly />
+        </div>
+    </div>
+
+
+    <div>
+       <a asp-action="Index" class="btn btn-primary">Back</a>
+    </div>
+
+</form>

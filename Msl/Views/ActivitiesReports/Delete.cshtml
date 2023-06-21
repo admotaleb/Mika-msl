@@ -1,0 +1,106 @@
+﻿@model Msl.Models.ActivitiesReport
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ActivitiesReport</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Trader)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Trader)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BranceSetting)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BranceSetting.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Turnover)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Turnover)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AverageClients)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AverageClients)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BoOpen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BoOpen)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Investment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Investment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Withdraw)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Withdraw)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Visit)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Visit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ClientsNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ClientsNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ExpectedBoOpen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ExpectedBoOpen)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoomMeeting)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ZoomMeeting)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhysicalVisit)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhysicalVisit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Leave)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Leave)
+        </dd>
+        
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

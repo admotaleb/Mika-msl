@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Msl.Models.TimeSetting>
+
+@{
+    ViewData["Title"] = "Time";
+}
+
+<a class="btn btn-secondary" asp-area="" asp-controller="BranceSettings" asp-action="Index">Branch Setting</a>
+<a class="btn btn-success" asp-area="" asp-controller="Departments" asp-action="Index">Departments</a>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OutTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OutTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

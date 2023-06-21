@@ -1,0 +1,76 @@
+﻿@using Msl.Models
+@model IEnumerable<ForceSale>
+
+
+<table class="table table-striped" id="myTable">
+
+    <thead>
+        <tr>
+            <th>A/C Code</th>
+            <th>Account Name</th>
+            <th>Market Value</th>
+            @*<th>Net Worth</th>*@
+            <th>Balance</th>
+            <th>Ratio</th>
+            @*<th>TWS</th>*@
+            <th>Trader</th>
+            <th>Status</th>
+            <th></th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AC_Code</td>
+                <td> @item.AccountName</td>
+                <td> @item.Market_Value</td>
+                @*<td> @item.Net_Worth</td>*@
+                <td> @item.Balance</td>
+                <td> @item.Ratio</td>
+                @*<td> @item.TWS</td>*@
+                <td> @item.Trader</td>
+                <td>@item.Status</td>
+                <td> <a asp-action="Status" class="btn btn-primary" asp-route-id="@item.Id">Edit</a></td>
+            </tr>
+        }
+        @if (ViewBag.roleName=="Admin")
+        {
+    <a asp-action="DeleteExcelData" class="btn btn-danger m-lg-2">Delete All Data</a>
+            <a asp-action="Index" class="btn btn-info">Back</a>
+        }
+        
+    </tbody>
+
+</table>
+
+@section Scripts{
+<script>
+      $(document).ready( function () {
+          var today = new Date().toISOString().split('T')[0];
+    $('#myTable').DataTable({
+                
+         dom: 'Bfrtip',
+        buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: today
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: today
+                    }
+                        
+            
+        ]
+
+    }
+    
+    
+    );
+} );
+
+</script>
+}

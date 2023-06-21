@@ -1,0 +1,151 @@
+﻿@model Msl.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<br />
+
+<h2 class="text-info">Add User</h2>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
+<form asp-action="Create" method="post" id="user-form" enctype="multipart/form-data" class="">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+    @* <div class="text-primary">
+    @ViewBag.SaveSucceeded
+    </div>*@
+    
+    <div class="row">
+        <div class="col-3">
+            <label>Fast Name</label>
+        </div>
+        <div class="col-3">
+            <label>Last Name</label>
+        </div>
+        
+    </div>
+    <div class="row">
+
+        <div class="col-3">
+            <input asp-for="FastName" />
+        </div>
+        <div class="col-3">
+            <input asp-for="LastName" />
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label>User Name</label>
+        </div>
+        <div class="col-3">
+            <label>Email</label>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-3">
+            <input asp-for="UserName"/>
+        </div>
+        <div class="col-3">
+            <input asp-for="Email" required/>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-3">
+            <label>Phone Number</label>
+            </div>
+            <div class="col-2">
+            <label>Branch Name</label>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-3">
+                <input asp-for="PhoneNumber" />
+            </div>
+            <div class="col-3">
+            <select asp-for="BranceSettingBranceId" class="form-control" asp-items="ViewBag.BranceId"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label asp-for="Tws"></label>
+            </div>
+            <div class="col-2">
+            <label>Password</label>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-3">
+            <input asp-for="Tws" placeholder="If You Trader"/>
+            </div>
+            <div class="col-3">
+            <input asp-for="PasswordHash" type="password" id="password"/>
+            
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-3">
+            
+        </div>
+        <div class="col-2">
+            <label>Confirme Password</label>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-3">
+            
+        </div>
+            <div class="col-3">
+            <input asp-for="PasswordHash" type="password" id="confirm_password" />
+            <label id='message'></label>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-1">
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+            <div class="col-1">
+                <a asp-action="Index" class="btn btn-primary">Back</a>
+            </div>
+
+        </div>
+    
+</form>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#user-form").validate({
+                rules: {
+                    UserName: {
+                        required: true,
+
+                    },
+
+                    PasswordHash: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    UserName: "Invalid Name.",
+                    PasswordHash: "Invalid Password.",
+                },
+            });
+        });
+
+        $('#password, #confirm_password').on('keyup', function () {
+            if ($('#password').val() == $('#confirm_password').val()) {
+                $('#message').html('Matching').css('color', 'green');
+            } else
+                $('#message').html('Not Matching').css('color', 'red');
+        });
+
+    </script>
+}
+
+

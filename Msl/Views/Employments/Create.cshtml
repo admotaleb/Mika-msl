@@ -1,0 +1,82 @@
+﻿@model Msl.Models.Employment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Employment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyBusiness" class="control-label"></label>
+                <input asp-for="CompanyBusiness" class="form-control" />
+                <span asp-validation-for="CompanyBusiness" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Designation" class="control-label"></label>
+                <input asp-for="Designation" class="form-control" />
+                <span asp-validation-for="Designation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Department" class="control-label"></label>
+                <input asp-for="Department" class="form-control" />
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Responsibilities" class="control-label"></label>
+                <textarea asp-for="Responsibilities" class="form-control" rows="4" cols="50"></textarea>
+                <span asp-validation-for="Responsibilities" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyLocation" class="control-label"></label>
+                <input asp-for="CompanyLocation" class="form-control" />
+                <span asp-validation-for="CompanyLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="From" class="control-label"></label>
+                <input asp-for="From" type="date" class="form-control" />
+                <span asp-validation-for="From" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="To" class="control-label"></label>
+                <input asp-for="To" type="checkbox" class="coupon_question" onchange="valueChanged()" /> <label class="control-label"> Continue</label>
+                <input asp-for="To" type="date" class="form-control answer" />
+                <span asp-validation-for="To" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <select asp-for="ApplicationUserId" class ="form-control" asp-items="ViewBag.ApplicationUserId"></select>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function valueChanged() {
+            if ($('.coupon_question').is(":checked"))
+                $(".answer").hide();
+            else
+                
+            $(".answer").show();
+        }
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

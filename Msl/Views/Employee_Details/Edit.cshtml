@@ -1,0 +1,129 @@
+﻿@model Msl.Models.Employee_Details
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<h4>Employee Details</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Fathers_Name" class="control-label"></label>
+                <input asp-for="Fathers_Name" class="form-control" />
+                <span asp-validation-for="Fathers_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mothers_Name" class="control-label"></label>
+                <input asp-for="Mothers_Name" class="form-control" />
+                <span asp-validation-for="Mothers_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Spouse_Name" class="control-label"></label>
+                <input asp-for="Spouse_Name" class="form-control" />
+                <span asp-validation-for="Spouse_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Desgnation" class="control-label"></label>
+                <input asp-for="Desgnation" class="form-control" />
+                <span asp-validation-for="Desgnation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DseAuthorized" class="control-label"></label><br />
+                Authorized: @Html.RadioButtonFor(m => m.DseAuthorized,"Authorized")
+                Unauthorized: @Html.RadioButtonFor(m => m.DseAuthorized,"Unauthorized")
+                <span asp-validation-for="DseAuthorized" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Joning_Date" class="control-label"></label>
+                <input asp-for="Joning_Date" type="date" class="form-control" />
+                <span asp-validation-for="Joning_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date_of_birth" class="control-label"></label>
+                <input asp-for="Date_of_birth" type="date" class="form-control" />
+                <span asp-validation-for="Date_of_birth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blood_Group" class="control-label"></label>
+                <input asp-for="Blood_Group" class="form-control" />
+                <span asp-validation-for="Blood_Group" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NID" class="control-label"></label>
+                <input asp-for="NID" class="form-control" />
+                <span asp-validation-for="NID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact_No_Personal" class="control-label"></label>
+                <input asp-for="Contact_No_Personal" class="form-control" />
+                <span asp-validation-for="Contact_No_Personal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmergencyContact" class="control-label"></label>
+                <input asp-for="EmergencyContact" class="form-control" />
+                <span asp-validation-for="EmergencyContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Present_Address" class="control-label"></label>
+                <textarea asp-for="Present_Address" class="form-control" rows="4" cols="50"></textarea>
+                <span asp-validation-for="Present_Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Permanent_Address" class="control-label"></label>
+                <textarea asp-for="Permanent_Address" class="form-control" rows="4" cols="50"></textarea>
+                <span asp-validation-for="Permanent_Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label><br />
+                Male: @Html.RadioButtonFor(m => m.Gender,"Male")
+                Female: @Html.RadioButtonFor(m => m.Gender,"Female")
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaritalStatus" class="control-label"></label><br />
+                Married: @Html.RadioButtonFor(m => m.MaritalStatus,"Married")
+                Unmarried: @Html.RadioButtonFor(m => m.MaritalStatus,"Unmarried")
+                <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Religion" class="control-label"></label>
+                <input asp-for="Religion" class="form-control" />
+                <span asp-validation-for="Religion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" type="file" accept="image/*" />
+                <input asp-for="Pictures" readonly />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                <img src="@("~/image/"+Model.Pictures)" asp-append-version="true" width="250px" height="250px" />
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <select asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.ApplicationUserId"></select>
+                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

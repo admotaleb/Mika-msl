@@ -1,0 +1,109 @@
+﻿@model Msl.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<br />
+
+<h2 class="text-info">Update User</h2>
+
+
+
+
+<form asp-action="Edit" method="post" id="user-form" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+
+    <div class="text-primary">
+        <input asp-for="Id" value="@Model.Id" type="hidden" />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="FastName"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="FastName" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="LastName"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="LastName" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="UserName"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="UserName" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Email"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="Email" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="PhoneNumber"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="PhoneNumber" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="BranceSetting.Name"></label>
+        </div>
+        <div class="col-4">
+        <select asp-for="BranceSettingBranceId" class="form-control" asp-items="ViewBag.BranceId"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Tws"></label>
+        </div>
+        <div class="col-4">
+            <input asp-for="Tws" placeholder="If You Trader" />
+        </div>
+    </div>
+  
+
+    <div>
+        <input type="submit" class="btn btn-success" value="Update" />
+        <a asp-action="Index" class="btn btn-primary">Back</a>
+    </div>
+
+</form>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#user-form").validate({
+                rules: {
+                    UserName: {
+                        required: true,
+
+                    },
+
+                    PasswordHash: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    UserName: "Invalid Name",
+                    PasswordHash: "Invalid Password",
+                },
+            });
+        });
+
+    </script>
+}
+
+

@@ -1,0 +1,3923 @@
+﻿@model IEnumerable<Msl.Models.ActivitiesReport>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userInfo = HttpContextAccessor.HttpContext.Session.GetString("roleName");
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if (userInfo == "Admin")
+{
+    <form asp-action="Index">
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                <input name="FirstDate" type="date" class="form-control" placeholder="First Date">
+            </div>
+            <div class="col col-lg-2">
+                <input name="LastDate" type="date" class="form-control" placeholder="Last Date">
+            </div>
+            <div class="col col-lg-2">
+                <input type="submit" class="btn btn-primary" value="Search">
+            </div>
+        </div>
+    </form>
+}
+
+<table class="table table-striped" id="myTableActivitiesReports">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Trader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BranceSetting)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Turnover)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AverageClients)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BoOpen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Investment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Withdraw)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Visit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientsNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpectedBoOpen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZoomMeeting)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhysicalVisit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leave)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var HeadOfficeTurnover = 0;
+            var HeadOfficeAverageClients = 0;
+            var HeadOfficeBoOpen = 0;
+            var HeadOfficeInvestment = 0;
+            var HeadOfficeWithdraw = 0;
+            var HeadOfficeVisit = 0;
+            var HeadOfficeExpectedBoOpen = 0;
+            var HeadOfficeZoomMeeting = 0;
+            var HeadOfficePhysicalVisit = 0;
+            var HeadOfficeLeave = 0;
+            var HeadOfficeRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 2)
+                {
+                    HeadOfficeTurnover = HeadOfficeTurnover + Convert.ToInt32(item.Turnover);
+                    HeadOfficeAverageClients = HeadOfficeAverageClients + item.AverageClients;
+                    HeadOfficeBoOpen = HeadOfficeBoOpen + Convert.ToInt32(item.BoOpen);
+                    HeadOfficeInvestment = HeadOfficeInvestment + Convert.ToInt32(item.Investment);
+                    HeadOfficeWithdraw = HeadOfficeWithdraw + Convert.ToInt32(item.Withdraw);
+                    HeadOfficeVisit = HeadOfficeVisit + Convert.ToInt32(item.Visit);
+                    HeadOfficeExpectedBoOpen = HeadOfficeExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    HeadOfficeZoomMeeting = HeadOfficeZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    HeadOfficePhysicalVisit = HeadOfficePhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    HeadOfficeLeave = HeadOfficeLeave + Convert.ToInt32(item.Leave);
+                    HeadOfficeRowCount = HeadOfficeRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (HeadOfficeRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Head Office
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @HeadOfficeTurnover
+                    </td>
+                    <td>
+                        @HeadOfficeAverageClients
+                    </td>
+                    <td>
+                        @HeadOfficeBoOpen
+                    </td>
+                    <td>
+                        @HeadOfficeInvestment
+                    </td>
+                    <td>
+                        @HeadOfficeWithdraw
+                    </td>
+                    <td>
+                        @HeadOfficeVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @HeadOfficeExpectedBoOpen
+                    </td>
+                    <td>
+                        @HeadOfficeZoomMeeting
+                    </td>
+                    <td>
+                        @HeadOfficePhysicalVisit
+                    </td>
+                    <td>
+                        @HeadOfficeLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var NaogoanTurnover = 0;
+            var NaogoanAverageClients = 0;
+            var NaogoanBoOpen = 0;
+            var NaogoanInvestment = 0;
+            var NaogoanWithdraw = 0;
+            var NaogoanVisit = 0;
+            var NaogoanExpectedBoOpen = 0;
+            var NaogoanZoomMeeting = 0;
+            var NaogoanPhysicalVisit = 0;
+            var NaogoanLeave = 0;
+            var NaogoanRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 4)
+                {
+                    NaogoanTurnover = NaogoanTurnover + Convert.ToInt32(item.Turnover);
+                    NaogoanAverageClients = NaogoanAverageClients + item.AverageClients;
+                    NaogoanBoOpen = HeadOfficeBoOpen + Convert.ToInt32(item.BoOpen);
+                    NaogoanInvestment = NaogoanInvestment + Convert.ToInt32(item.Investment);
+                    NaogoanWithdraw = NaogoanWithdraw + Convert.ToInt32(item.Withdraw);
+                    NaogoanVisit = NaogoanVisit + Convert.ToInt32(item.Visit);
+                    NaogoanExpectedBoOpen = NaogoanExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    NaogoanZoomMeeting = NaogoanZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    NaogoanPhysicalVisit = NaogoanPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    NaogoanLeave = NaogoanLeave + Convert.ToInt32(item.Leave);
+                    NaogoanRowCount = NaogoanRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (NaogoanRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Naogoan
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @NaogoanTurnover
+                    </td>
+                    <td>
+                        @NaogoanAverageClients
+                    </td>
+                    <td>
+                        @NaogoanBoOpen
+                    </td>
+                    <td>
+                        @NaogoanInvestment
+                    </td>
+                    <td>
+                        @NaogoanWithdraw
+                    </td>
+                    <td>
+                        @NaogoanVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @NaogoanExpectedBoOpen
+                    </td>
+                    <td>
+                        @NaogoanZoomMeeting
+                    </td>
+                    <td>
+                        @NaogoanPhysicalVisit
+                    </td>
+                    <td>
+                        @NaogoanLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var RajbariTurnover = 0;
+            var RajbariAverageClients = 0;
+            var RajbariBoOpen = 0;
+            var RajbariInvestment = 0;
+            var RajbariWithdraw = 0;
+            var RajbariVisit = 0;
+            var RajbariExpectedBoOpen = 0;
+            var RajbariZoomMeeting = 0;
+            var RajbariPhysicalVisit = 0;
+            var RajbariLeave = 0;
+            var RajbariRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 5)
+                {
+                    RajbariTurnover = RajbariTurnover + Convert.ToInt32(item.Turnover);
+                    RajbariAverageClients = RajbariAverageClients + item.AverageClients;
+                    RajbariBoOpen = RajbariBoOpen + Convert.ToInt32(item.BoOpen);
+                    RajbariInvestment = RajbariInvestment + Convert.ToInt32(item.Investment);
+                    RajbariWithdraw = RajbariWithdraw + Convert.ToInt32(item.Withdraw);
+                    RajbariVisit = RajbariVisit + Convert.ToInt32(item.Visit);
+                    RajbariExpectedBoOpen = RajbariExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    RajbariZoomMeeting = RajbariZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    RajbariPhysicalVisit = RajbariPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    RajbariLeave = RajbariLeave + Convert.ToInt32(item.Leave);
+                    RajbariRowCount = RajbariRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (RajbariRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Rajbari
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @RajbariTurnover
+                    </td>
+                    <td>
+                        @RajbariAverageClients
+                    </td>
+                    <td>
+                        @RajbariBoOpen
+                    </td>
+                    <td>
+                        @RajbariInvestment
+                    </td>
+                    <td>
+                        @RajbariWithdraw
+                    </td>
+                    <td>
+                        @RajbariVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @RajbariExpectedBoOpen
+                    </td>
+                    <td>
+                        @RajbariZoomMeeting
+                    </td>
+                    <td>
+                        @RajbariPhysicalVisit
+                    </td>
+                    <td>
+                        @RajbariLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var MirpurTurnover = 0;
+            var MirpurAverageClients = 0;
+            var MirpurBoOpen = 0;
+            var MirpurInvestment = 0;
+            var MirpurWithdraw = 0;
+            var MirpurVisit = 0;
+            var MirpurExpectedBoOpen = 0;
+            var MirpurZoomMeeting = 0;
+            var MirpurPhysicalVisit = 0;
+            var MirpurLeave = 0;
+            var MirpurRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 6)
+                {
+                    MirpurTurnover = MirpurTurnover + Convert.ToInt32(item.Turnover);
+                    MirpurAverageClients = MirpurAverageClients + item.AverageClients;
+                    MirpurBoOpen = MirpurBoOpen + Convert.ToInt32(item.BoOpen);
+                    MirpurInvestment = MirpurInvestment + Convert.ToInt32(item.Investment);
+                    MirpurWithdraw = MirpurWithdraw + Convert.ToInt32(item.Withdraw);
+                    MirpurVisit = MirpurVisit + Convert.ToInt32(item.Visit);
+                    MirpurExpectedBoOpen = MirpurExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    MirpurZoomMeeting = MirpurZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    MirpurPhysicalVisit = MirpurPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    MirpurLeave = MirpurLeave + Convert.ToInt32(item.Leave);
+                    MirpurRowCount = MirpurRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (MirpurRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Mirpur
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MirpurTurnover
+                    </td>
+                    <td>
+                        @MirpurAverageClients
+                    </td>
+                    <td>
+                        @MirpurBoOpen
+                    </td>
+                    <td>
+                        @RajbariInvestment
+                    </td>
+                    <td>
+                        @MirpurWithdraw
+                    </td>
+                    <td>
+                        @MirpurVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MirpurExpectedBoOpen
+                    </td>
+                    <td>
+                        @MirpurZoomMeeting
+                    </td>
+                    <td>
+                        @MirpurPhysicalVisit
+                    </td>
+                    <td>
+                        @MirpurLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var DhanmondiTurnover = 0;
+            var DhanmondiAverageClients = 0;
+            var DhanmondiBoOpen = 0;
+            var DhanmondiInvestment = 0;
+            var DhanmondiWithdraw = 0;
+            var DhanmondiVisit = 0;
+            var DhanmondiExpectedBoOpen = 0;
+            var DhanmondiZoomMeeting = 0;
+            var DhanmondiPhysicalVisit = 0;
+            var DhanmondiLeave = 0;
+            var DhanmondiRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 7)
+                {
+                    DhanmondiTurnover = DhanmondiTurnover + Convert.ToInt32(item.Turnover);
+                    DhanmondiAverageClients = DhanmondiAverageClients + item.AverageClients;
+                    DhanmondiBoOpen = DhanmondiBoOpen + Convert.ToInt32(item.BoOpen);
+                    DhanmondiInvestment = DhanmondiInvestment + Convert.ToInt32(item.Investment);
+                    DhanmondiWithdraw = DhanmondiWithdraw + Convert.ToInt32(item.Withdraw);
+                    DhanmondiVisit = DhanmondiVisit + Convert.ToInt32(item.Visit);
+                    DhanmondiExpectedBoOpen = DhanmondiExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    DhanmondiZoomMeeting = DhanmondiZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    DhanmondiPhysicalVisit = DhanmondiPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    DhanmondiLeave = DhanmondiLeave + Convert.ToInt32(item.Leave);
+                    DhanmondiRowCount = DhanmondiRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (DhanmondiRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Dhanmondi
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @DhanmondiTurnover
+                    </td>
+                    <td>
+                        @DhanmondiAverageClients
+                    </td>
+                    <td>
+                        @DhanmondiBoOpen
+                    </td>
+                    <td>
+                        @DhanmondiInvestment
+                    </td>
+                    <td>
+                        @DhanmondiWithdraw
+                    </td>
+                    <td>
+                        @DhanmondiVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @DhanmondiExpectedBoOpen
+                    </td>
+                    <td>
+                        @DhanmondiZoomMeeting
+                    </td>
+                    <td>
+                        @DhanmondiPhysicalVisit
+                    </td>
+                    <td>
+                        @DhanmondiLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var MohammadpurTurnover = 0;
+            var MohammadpurAverageClients = 0;
+            var MohammadpurBoOpen = 0;
+            var MohammadpurInvestment = 0;
+            var MohammadpurWithdraw = 0;
+            var MohammadpurVisit = 0;
+            var MohammadpurExpectedBoOpen = 0;
+            var MohammadpurZoomMeeting = 0;
+            var MohammadpurPhysicalVisit = 0;
+            var MohammadpurLeave = 0;
+            var MohammadpurRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 8)
+                {
+                    MohammadpurTurnover = MohammadpurTurnover + Convert.ToInt32(item.Turnover);
+                    MohammadpurAverageClients = MohammadpurAverageClients + item.AverageClients;
+                    MohammadpurBoOpen = MohammadpurBoOpen + Convert.ToInt32(item.BoOpen);
+                    MohammadpurInvestment = MohammadpurInvestment + Convert.ToInt32(item.Investment);
+                    MohammadpurWithdraw = MohammadpurWithdraw + Convert.ToInt32(item.Withdraw);
+                    MohammadpurVisit = MohammadpurVisit + Convert.ToInt32(item.Visit);
+                    MohammadpurExpectedBoOpen = MohammadpurExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    MohammadpurZoomMeeting = MohammadpurZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    MohammadpurPhysicalVisit = MohammadpurPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    MohammadpurLeave = MohammadpurLeave + Convert.ToInt32(item.Leave);
+                    MohammadpurRowCount = MohammadpurRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (MohammadpurRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Mohammadpur
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MohammadpurTurnover
+                    </td>
+                    <td>
+                        @MohammadpurAverageClients
+                    </td>
+                    <td>
+                        @MohammadpurBoOpen
+                    </td>
+                    <td>
+                        @MohammadpurInvestment
+                    </td>
+                    <td>
+                        @MohammadpurWithdraw
+                    </td>
+                    <td>
+                        @MohammadpurVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MohammadpurExpectedBoOpen
+                    </td>
+                    <td>
+                        @MohammadpurZoomMeeting
+                    </td>
+                    <td>
+                        @MohammadpurPhysicalVisit
+                    </td>
+                    <td>
+                        @MohammadpurLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var KawranTurnover = 0;
+            var KawranAverageClients = 0;
+            var KawranBoOpen = 0;
+            var KawranInvestment = 0;
+            var KawranWithdraw = 0;
+            var KawranVisit = 0;
+            var KawranExpectedBoOpen = 0;
+            var KawranZoomMeeting = 0;
+            var KawranPhysicalVisit = 0;
+            var KawranLeave = 0;
+            var KawranRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 9)
+                {
+                    KawranTurnover = KawranTurnover + Convert.ToInt32(item.Turnover);
+                    KawranAverageClients = KawranAverageClients + item.AverageClients;
+                    KawranBoOpen = KawranBoOpen + Convert.ToInt32(item.BoOpen);
+                    KawranInvestment = KawranInvestment + Convert.ToInt32(item.Investment);
+                    KawranWithdraw = KawranWithdraw + Convert.ToInt32(item.Withdraw);
+                    KawranVisit = KawranVisit + Convert.ToInt32(item.Visit);
+                    KawranExpectedBoOpen = KawranExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    KawranZoomMeeting = KawranZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    KawranPhysicalVisit = KawranPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    KawranLeave = KawranLeave + Convert.ToInt32(item.Leave);
+                    KawranRowCount = KawranRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (KawranRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        KawranBazar
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @KawranTurnover
+                    </td>
+                    <td>
+                        @KawranAverageClients
+                    </td>
+                    <td>
+                        @KawranBoOpen
+                    </td>
+                    <td>
+                        @KawranInvestment
+                    </td>
+                    <td>
+                        @KawranWithdraw
+                    </td>
+                    <td>
+                        @KawranVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @KawranExpectedBoOpen
+                    </td>
+                    <td>
+                        @KawranZoomMeeting
+                    </td>
+                    <td>
+                        @KawranPhysicalVisit
+                    </td>
+                    <td>
+                        @KawranLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var Uttara1Turnover = 0;
+            var Uttara1AverageClients = 0;
+            var Uttara1BoOpen = 0;
+            var Uttara1Investment = 0;
+            var Uttara1Withdraw = 0;
+            var Uttara1Visit = 0;
+            var Uttara1ExpectedBoOpen = 0;
+            var Uttara1ZoomMeeting = 0;
+            var Uttara1PhysicalVisit = 0;
+            var Uttara1Leave = 0;
+            var Uttara1RowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 10)
+                {
+                    Uttara1Turnover = Uttara1Turnover + Convert.ToInt32(item.Turnover);
+                    Uttara1AverageClients = Uttara1AverageClients + item.AverageClients;
+                    Uttara1BoOpen = Uttara1BoOpen + Convert.ToInt32(item.BoOpen);
+                    Uttara1Investment = Uttara1Investment + Convert.ToInt32(item.Investment);
+                    Uttara1Withdraw = Uttara1Withdraw + Convert.ToInt32(item.Withdraw);
+                    Uttara1Visit = Uttara1Visit + Convert.ToInt32(item.Visit);
+                    Uttara1ExpectedBoOpen = Uttara1ExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    Uttara1ZoomMeeting = Uttara1ZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    Uttara1PhysicalVisit = Uttara1PhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    Uttara1Leave = Uttara1Leave + Convert.ToInt32(item.Leave);
+                    Uttara1RowCount = Uttara1RowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (Uttara1RowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Uttara-1
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @Uttara1Turnover
+                    </td>
+                    <td>
+                        @Uttara1AverageClients
+                    </td>
+                    <td>
+                        @Uttara1BoOpen
+                    </td>
+                    <td>
+                        @Uttara1Investment
+                    </td>
+                    <td>
+                        @Uttara1Withdraw
+                    </td>
+                    <td>
+                        @Uttara1Visit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @Uttara1ExpectedBoOpen
+                    </td>
+                    <td>
+                        @Uttara1ZoomMeeting
+                    </td>
+                    <td>
+                        @Uttara1PhysicalVisit
+                    </td>
+                    <td>
+                        @Uttara1Leave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var Uttara2Turnover = 0;
+            var Uttara2AverageClients = 0;
+            var Uttara2BoOpen = 0;
+            var Uttara2Investment = 0;
+            var Uttara2Withdraw = 0;
+            var Uttara2Visit = 0;
+            var Uttara2ExpectedBoOpen = 0;
+            var Uttara2ZoomMeeting = 0;
+            var Uttara2PhysicalVisit = 0;
+            var Uttara2Leave = 0;
+            var Uttara2RowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 11)
+                {
+                    Uttara2Turnover = Uttara2Turnover + Convert.ToInt32(item.Turnover);
+                    Uttara2AverageClients = Uttara2AverageClients + item.AverageClients;
+                    Uttara2BoOpen = Uttara2BoOpen + Convert.ToInt32(item.BoOpen);
+                    Uttara2Investment = Uttara2Investment + Convert.ToInt32(item.Investment);
+                    Uttara2Withdraw = Uttara2Withdraw + Convert.ToInt32(item.Withdraw);
+                    Uttara2Visit = Uttara2Visit + Convert.ToInt32(item.Visit);
+                    Uttara2ExpectedBoOpen = Uttara2ExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    Uttara2ZoomMeeting = Uttara2ZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    Uttara2PhysicalVisit = Uttara2PhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    Uttara2Leave = Uttara2Leave + Convert.ToInt32(item.Leave);
+                    Uttara2RowCount = Uttara2RowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (Uttara2RowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Uttara-2
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @Uttara2Turnover
+                    </td>
+                    <td>
+                        @Uttara2AverageClients
+                    </td>
+                    <td>
+                        @Uttara2BoOpen
+                    </td>
+                    <td>
+                        @Uttara2Investment
+                    </td>
+                    <td>
+                        @Uttara2Withdraw
+                    </td>
+                    <td>
+                        @Uttara2Visit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @Uttara2ExpectedBoOpen
+                    </td>
+                    <td>
+                        @Uttara2ZoomMeeting
+                    </td>
+                    <td>
+                        @Uttara2PhysicalVisit
+                    </td>
+                    <td>
+                        @Uttara2Leave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var ElephantroadTurnover = 0;
+            var ElephantroadAverageClients = 0;
+            var ElephantroadBoOpen = 0;
+            var ElephantroadInvestment = 0;
+            var ElephantroadWithdraw = 0;
+            var ElephantroadVisit = 0;
+            var ElephantroadExpectedBoOpen = 0;
+            var ElephantroadZoomMeeting = 0;
+            var ElephantroadPhysicalVisit = 0;
+            var ElephantroadLeave = 0;
+            var ElephantroadRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 12)
+                {
+                    ElephantroadTurnover = ElephantroadTurnover + Convert.ToInt32(item.Turnover);
+                    ElephantroadAverageClients = ElephantroadAverageClients + item.AverageClients;
+                    ElephantroadBoOpen = ElephantroadBoOpen + Convert.ToInt32(item.BoOpen);
+                    ElephantroadInvestment = ElephantroadInvestment + Convert.ToInt32(item.Investment);
+                    ElephantroadWithdraw = ElephantroadWithdraw + Convert.ToInt32(item.Withdraw);
+                    ElephantroadVisit = ElephantroadVisit + Convert.ToInt32(item.Visit);
+                    ElephantroadExpectedBoOpen = ElephantroadExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    ElephantroadZoomMeeting = ElephantroadZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    ElephantroadPhysicalVisit = ElephantroadPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    ElephantroadLeave = ElephantroadLeave + Convert.ToInt32(item.Leave);
+                    ElephantroadRowCount = ElephantroadRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (ElephantroadRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Elephantroad
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ElephantroadTurnover
+                    </td>
+                    <td>
+                        @ElephantroadAverageClients
+                    </td>
+                    <td>
+                        @ElephantroadBoOpen
+                    </td>
+                    <td>
+                        @ElephantroadInvestment
+                    </td>
+                    <td>
+                        @ElephantroadWithdraw
+                    </td>
+                    <td>
+                        @ElephantroadVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ElephantroadExpectedBoOpen
+                    </td>
+                    <td>
+                        @ElephantroadZoomMeeting
+                    </td>
+                    <td>
+                        @ElephantroadPhysicalVisit
+                    </td>
+                    <td>
+                        @ElephantroadLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+            var MoulovibazarTurnover = 0;
+            var MoulovibazarAverageClients = 0;
+            var MoulovibazarBoOpen = 0;
+            var MoulovibazarInvestment = 0;
+            var MoulovibazarWithdraw = 0;
+            var MoulovibazarVisit = 0;
+            var MoulovibazarExpectedBoOpen = 0;
+            var MoulovibazarZoomMeeting = 0;
+            var MoulovibazarPhysicalVisit = 0;
+            var MoulovibazarLeave = 0;
+            var MoulovibazarRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 13)
+                {
+                    MoulovibazarTurnover = MoulovibazarTurnover + Convert.ToInt32(item.Turnover);
+                    MoulovibazarAverageClients = MoulovibazarAverageClients + item.AverageClients;
+                    MoulovibazarBoOpen = MoulovibazarBoOpen + Convert.ToInt32(item.BoOpen);
+                    MoulovibazarInvestment = MoulovibazarInvestment + Convert.ToInt32(item.Investment);
+                    MoulovibazarWithdraw = MoulovibazarWithdraw + Convert.ToInt32(item.Withdraw);
+                    MoulovibazarVisit = MoulovibazarVisit + Convert.ToInt32(item.Visit);
+                    MoulovibazarExpectedBoOpen = MoulovibazarExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    MoulovibazarZoomMeeting = MoulovibazarZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    MoulovibazarPhysicalVisit = MoulovibazarPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    MoulovibazarLeave = MoulovibazarLeave + Convert.ToInt32(item.Leave);
+                    MoulovibazarRowCount = MoulovibazarRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (MoulovibazarRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Moulovibazar
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MoulovibazarTurnover
+                    </td>
+                    <td>
+                        @MoulovibazarAverageClients
+                    </td>
+                    <td>
+                        @MoulovibazarBoOpen
+                    </td>
+                    <td>
+                        @MoulovibazarInvestment
+                    </td>
+                    <td>
+                        @MoulovibazarWithdraw
+                    </td>
+                    <td>
+                        @MoulovibazarVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MoulovibazarExpectedBoOpen
+                    </td>
+                    <td>
+                        @MoulovibazarZoomMeeting
+                    </td>
+                    <td>
+                        @MoulovibazarPhysicalVisit
+                    </td>
+                    <td>
+                        @MoulovibazarLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var MotijheelTurnover = 0;
+            var MotijheelAverageClients = 0;
+            var MotijheelBoOpen = 0;
+            var MotijheelInvestment = 0;
+            var MotijheelWithdraw = 0;
+            var MotijheelVisit = 0;
+            var MotijheelExpectedBoOpen = 0;
+            var MotijheelZoomMeeting = 0;
+            var MotijheelPhysicalVisit = 0;
+            var MotijheelLeave = 0;
+            var MotijheelRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 14)
+                {
+                    MotijheelTurnover = MotijheelTurnover + Convert.ToInt32(item.Turnover);
+                    MotijheelAverageClients = MotijheelAverageClients + item.AverageClients;
+                    MotijheelBoOpen = MotijheelBoOpen + Convert.ToInt32(item.BoOpen);
+                    MotijheelInvestment = MotijheelInvestment + Convert.ToInt32(item.Investment);
+                    MotijheelWithdraw = MotijheelWithdraw + Convert.ToInt32(item.Withdraw);
+                    MotijheelVisit = MotijheelVisit + Convert.ToInt32(item.Visit);
+                    MotijheelExpectedBoOpen = MotijheelExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    MotijheelZoomMeeting = MotijheelZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    MotijheelPhysicalVisit = MotijheelPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    MotijheelLeave = MotijheelLeave + Convert.ToInt32(item.Leave);
+                    MotijheelRowCount = MotijheelRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (MotijheelRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Motijheel
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MotijheelTurnover
+                    </td>
+                    <td>
+                        @MotijheelAverageClients
+                    </td>
+                    <td>
+                        @MotijheelBoOpen
+                    </td>
+                    <td>
+                        @MotijheelInvestment
+                    </td>
+                    <td>
+                        @MotijheelWithdraw
+                    </td>
+                    <td>
+                        @MotijheelVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @MotijheelExpectedBoOpen
+                    </td>
+                    <td>
+                        @MotijheelZoomMeeting
+                    </td>
+                    <td>
+                        @MotijheelPhysicalVisit
+                    </td>
+                    <td>
+                        @MotijheelLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var BoguraTurnover = 0;
+            var BoguraAverageClients = 0;
+            var BoguraBoOpen = 0;
+            var BoguraInvestment = 0;
+            var BoguraWithdraw = 0;
+            var BoguraVisit = 0;
+            var BoguraExpectedBoOpen = 0;
+            var BoguraZoomMeeting = 0;
+            var BoguraPhysicalVisit = 0;
+            var BoguraLeave = 0;
+            var BoguraRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 15)
+                {
+                    BoguraTurnover = BoguraTurnover + Convert.ToInt32(item.Turnover);
+                    BoguraAverageClients = BoguraAverageClients + item.AverageClients;
+                    BoguraBoOpen = BoguraBoOpen + Convert.ToInt32(item.BoOpen);
+                    BoguraInvestment = BoguraInvestment + Convert.ToInt32(item.Investment);
+                    BoguraWithdraw = BoguraWithdraw + Convert.ToInt32(item.Withdraw);
+                    BoguraVisit = BoguraVisit + Convert.ToInt32(item.Visit);
+                    BoguraExpectedBoOpen = BoguraExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    BoguraZoomMeeting = BoguraZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    BoguraPhysicalVisit = BoguraPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    BoguraLeave = BoguraLeave + Convert.ToInt32(item.Leave);
+                    BoguraRowCount = BoguraRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (BoguraRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Bogura
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @BoguraTurnover
+                    </td>
+                    <td>
+                        @BoguraAverageClients
+                    </td>
+                    <td>
+                        @BoguraBoOpen
+                    </td>
+                    <td>
+                        @BoguraInvestment
+                    </td>
+                    <td>
+                        @BoguraWithdraw
+                    </td>
+                    <td>
+                        @BoguraVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @BoguraExpectedBoOpen
+                    </td>
+                    <td>
+                        @BoguraZoomMeeting
+                    </td>
+                    <td>
+                        @BoguraPhysicalVisit
+                    </td>
+                    <td>
+                        @BoguraLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var ChattogramTurnover = 0;
+            var ChattogramAverageClients = 0;
+            var ChattogramBoOpen = 0;
+            var ChattogramInvestment = 0;
+            var ChattogramWithdraw = 0;
+            var ChattogramVisit = 0;
+            var ChattogramExpectedBoOpen = 0;
+            var ChattogramZoomMeeting = 0;
+            var ChattogramPhysicalVisit = 0;
+            var ChattogramLeave = 0;
+            var ChattogramRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 16)
+                {
+                    ChattogramTurnover = ChattogramTurnover + Convert.ToInt32(item.Turnover);
+                    ChattogramAverageClients = ChattogramAverageClients + item.AverageClients;
+                    ChattogramBoOpen = ChattogramBoOpen + Convert.ToInt32(item.BoOpen);
+                    ChattogramInvestment = ChattogramInvestment + Convert.ToInt32(item.Investment);
+                    ChattogramWithdraw = ChattogramWithdraw + Convert.ToInt32(item.Withdraw);
+                    ChattogramVisit = ChattogramVisit + Convert.ToInt32(item.Visit);
+                    ChattogramExpectedBoOpen = ChattogramExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    ChattogramZoomMeeting = ChattogramZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    ChattogramPhysicalVisit = ChattogramPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    ChattogramLeave = ChattogramLeave + Convert.ToInt32(item.Leave);
+                    ChattogramRowCount = ChattogramRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (ChattogramRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Chattogram
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ChattogramTurnover
+                    </td>
+                    <td>
+                        @ChattogramAverageClients
+                    </td>
+                    <td>
+                        @ChattogramBoOpen
+                    </td>
+                    <td>
+                        @ChattogramInvestment
+                    </td>
+                    <td>
+                        @ChattogramWithdraw
+                    </td>
+                    <td>
+                        @ChattogramVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ChattogramExpectedBoOpen
+                    </td>
+                    <td>
+                        @ChattogramZoomMeeting
+                    </td>
+                    <td>
+                        @ChattogramPhysicalVisit
+                    </td>
+                    <td>
+                        @ChattogramLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var NarayanganjTurnover = 0;
+            var NarayanganjAverageClients = 0;
+            var NarayanganjBoOpen = 0;
+            var NarayanganjInvestment = 0;
+            var NarayanganjWithdraw = 0;
+            var NarayanganjVisit = 0;
+            var NarayanganjExpectedBoOpen = 0;
+            var NarayanganjZoomMeeting = 0;
+            var NarayanganjPhysicalVisit = 0;
+            var NarayanganjLeave = 0;
+            var NarayanganjRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 17)
+                {
+                    NarayanganjTurnover = NarayanganjTurnover + Convert.ToInt32(item.Turnover);
+                    NarayanganjAverageClients = NarayanganjAverageClients + item.AverageClients;
+                    NarayanganjBoOpen = NarayanganjBoOpen + Convert.ToInt32(item.BoOpen);
+                    NarayanganjInvestment = NarayanganjInvestment + Convert.ToInt32(item.Investment);
+                    NarayanganjWithdraw = NarayanganjWithdraw + Convert.ToInt32(item.Withdraw);
+                    NarayanganjVisit = NarayanganjVisit + Convert.ToInt32(item.Visit);
+                    NarayanganjExpectedBoOpen = NarayanganjExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    NarayanganjZoomMeeting = NarayanganjZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    NarayanganjPhysicalVisit = NarayanganjPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    NarayanganjLeave = NarayanganjLeave + Convert.ToInt32(item.Leave);
+                    NarayanganjRowCount = NarayanganjRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (NarayanganjRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Narayanganj
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @NarayanganjTurnover
+                    </td>
+                    <td>
+                        @NarayanganjAverageClients
+                    </td>
+                    <td>
+                        @NarayanganjBoOpen
+                    </td>
+                    <td>
+                        @NarayanganjInvestment
+                    </td>
+                    <td>
+                        @NarayanganjWithdraw
+                    </td>
+                    <td>
+                        @NarayanganjVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @NarayanganjExpectedBoOpen
+                    </td>
+                    <td>
+                        @NarayanganjZoomMeeting
+                    </td>
+                    <td>
+                        @NarayanganjPhysicalVisit
+                    </td>
+                    <td>
+                        @NarayanganjLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var SylhetTurnover = 0;
+            var SylhetAverageClients = 0;
+            var SylhetBoOpen = 0;
+            var SylhetInvestment = 0;
+            var SylhetWithdraw = 0;
+            var SylhetVisit = 0;
+            var SylhetExpectedBoOpen = 0;
+            var SylhetZoomMeeting = 0;
+            var SylhetPhysicalVisit = 0;
+            var SylhetLeave = 0;
+            var SylhetRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 18)
+                {
+                    SylhetTurnover = SylhetTurnover + Convert.ToInt32(item.Turnover);
+                    SylhetAverageClients = SylhetAverageClients + item.AverageClients;
+                    SylhetBoOpen = SylhetBoOpen + Convert.ToInt32(item.BoOpen);
+                    SylhetInvestment = SylhetInvestment + Convert.ToInt32(item.Investment);
+                    SylhetWithdraw = SylhetWithdraw + Convert.ToInt32(item.Withdraw);
+                    SylhetVisit = SylhetVisit + Convert.ToInt32(item.Visit);
+                    SylhetExpectedBoOpen = SylhetExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    SylhetZoomMeeting = SylhetZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    SylhetPhysicalVisit = SylhetPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    SylhetLeave = SylhetLeave + Convert.ToInt32(item.Leave);
+                    SylhetRowCount = SylhetRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (SylhetRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Sylhet
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @SylhetTurnover
+                    </td>
+                    <td>
+                        @SylhetAverageClients
+                    </td>
+                    <td>
+                        @SylhetBoOpen
+                    </td>
+                    <td>
+                        @SylhetInvestment
+                    </td>
+                    <td>
+                        @SylhetWithdraw
+                    </td>
+                    <td>
+                        @SylhetVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @SylhetExpectedBoOpen
+                    </td>
+                    <td>
+                        @SylhetZoomMeeting
+                    </td>
+                    <td>
+                        @SylhetPhysicalVisit
+                    </td>
+                    <td>
+                        @SylhetLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var SavarTurnover = 0;
+            var SavarAverageClients = 0;
+            var SavarBoOpen = 0;
+            var SavarInvestment = 0;
+            var SavarWithdraw = 0;
+            var SavarVisit = 0;
+            var SavarExpectedBoOpen = 0;
+            var SavarZoomMeeting = 0;
+            var SavarPhysicalVisit = 0;
+            var SavarLeave = 0;
+            var SavarRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 19)
+                {
+                    SavarTurnover = SavarTurnover + Convert.ToInt32(item.Turnover);
+                    SavarAverageClients = SavarAverageClients + item.AverageClients;
+                    SavarBoOpen = SavarBoOpen + Convert.ToInt32(item.BoOpen);
+                    SavarInvestment = SavarInvestment + Convert.ToInt32(item.Investment);
+                    SavarWithdraw = SavarWithdraw + Convert.ToInt32(item.Withdraw);
+                    SavarVisit = SavarVisit + Convert.ToInt32(item.Visit);
+                    SavarExpectedBoOpen = SavarExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    SavarZoomMeeting = SavarZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    SavarPhysicalVisit = SavarPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    SavarLeave = SavarLeave + Convert.ToInt32(item.Leave);
+                    SavarRowCount = SavarRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (SavarRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Savar
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @SavarTurnover
+                    </td>
+                    <td>
+                        @SavarAverageClients
+                    </td>
+                    <td>
+                        @SavarBoOpen
+                    </td>
+                    <td>
+                        @SavarInvestment
+                    </td>
+                    <td>
+                        @SavarWithdraw
+                    </td>
+                    <td>
+                        @SavarVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @SavarExpectedBoOpen
+                    </td>
+                    <td>
+                        @SavarZoomMeeting
+                    </td>
+                    <td>
+                        @SavarPhysicalVisit
+                    </td>
+                    <td>
+                        @SavarLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var BhairabTurnover = 0;
+            var BhairabAverageClients = 0;
+            var BhairabBoOpen = 0;
+            var BhairabInvestment = 0;
+            var BhairabWithdraw = 0;
+            var BhairabVisit = 0;
+            var BhairabExpectedBoOpen = 0;
+            var BhairabZoomMeeting = 0;
+            var BhairabPhysicalVisit = 0;
+            var BhairabLeave = 0;
+            var BhairabRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 20)
+                {
+                    BhairabTurnover = BhairabTurnover + Convert.ToInt32(item.Turnover);
+                    BhairabAverageClients = BhairabAverageClients + item.AverageClients;
+                    BhairabBoOpen = BhairabBoOpen + Convert.ToInt32(item.BoOpen);
+                    BhairabInvestment = BhairabInvestment + Convert.ToInt32(item.Investment);
+                    BhairabWithdraw = BhairabWithdraw + Convert.ToInt32(item.Withdraw);
+                    BhairabVisit = BhairabVisit + Convert.ToInt32(item.Visit);
+                    BhairabExpectedBoOpen = BhairabExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    BhairabZoomMeeting = BhairabZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    BhairabPhysicalVisit = BhairabPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    BhairabLeave = BhairabLeave + Convert.ToInt32(item.Leave);
+                    BhairabRowCount = BhairabRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (BhairabRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Bhairab
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @BhairabTurnover
+                    </td>
+                    <td>
+                        @BhairabAverageClients
+                    </td>
+                    <td>
+                        @BhairabBoOpen
+                    </td>
+                    <td>
+                        @BhairabInvestment
+                    </td>
+                    <td>
+                        @BhairabWithdraw
+                    </td>
+                    <td>
+                        @BhairabVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @BhairabExpectedBoOpen
+                    </td>
+                    <td>
+                        @BhairabZoomMeeting
+                    </td>
+                    <td>
+                        @BhairabPhysicalVisit
+                    </td>
+                    <td>
+                        @BhairabLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var ComillaTurnover = 0;
+            var ComillaAverageClients = 0;
+            var ComillaBoOpen = 0;
+            var ComillaInvestment = 0;
+            var ComillaWithdraw = 0;
+            var ComillaVisit = 0;
+            var ComillaExpectedBoOpen = 0;
+            var ComillaZoomMeeting = 0;
+            var ComillaPhysicalVisit = 0;
+            var ComillaLeave = 0;
+            var ComillaRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 21)
+                {
+                    ComillaTurnover = ComillaTurnover + Convert.ToInt32(item.Turnover);
+                    ComillaAverageClients = ComillaAverageClients + item.AverageClients;
+                    ComillaBoOpen = ComillaBoOpen + Convert.ToInt32(item.BoOpen);
+                    ComillaInvestment = ComillaInvestment + Convert.ToInt32(item.Investment);
+                    ComillaWithdraw = ComillaWithdraw + Convert.ToInt32(item.Withdraw);
+                    ComillaVisit = ComillaVisit + Convert.ToInt32(item.Visit);
+                    ComillaExpectedBoOpen = ComillaExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    ComillaZoomMeeting = ComillaZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    ComillaPhysicalVisit = ComillaPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    ComillaLeave = ComillaLeave + Convert.ToInt32(item.Leave);
+                    ComillaRowCount = ComillaRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (ComillaRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Comilla
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ComillaTurnover
+                    </td>
+                    <td>
+                        @ComillaAverageClients
+                    </td>
+                    <td>
+                        @ComillaBoOpen
+                    </td>
+                    <td>
+                        @ComillaInvestment
+                    </td>
+                    <td>
+                        @ComillaWithdraw
+                    </td>
+                    <td>
+                        @ComillaVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ComillaExpectedBoOpen
+                    </td>
+                    <td>
+                        @ComillaZoomMeeting
+                    </td>
+                    <td>
+                        @ComillaPhysicalVisit
+                    </td>
+                    <td>
+                        @ComillaLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var ChandpurTurnover = 0;
+            var ChandpurAverageClients = 0;
+            var ChandpurBoOpen = 0;
+            var ChandpurInvestment = 0;
+            var ChandpurWithdraw = 0;
+            var ChandpurVisit = 0;
+            var ChandpurExpectedBoOpen = 0;
+            var ChandpurZoomMeeting = 0;
+            var ChandpurPhysicalVisit = 0;
+            var ChandpurLeave = 0;
+            var ChandpurRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 22)
+                {
+                    ChandpurTurnover = ChandpurTurnover + Convert.ToInt32(item.Turnover);
+                    ChandpurAverageClients = ChandpurAverageClients + item.AverageClients;
+                    ChandpurBoOpen = ChandpurBoOpen + Convert.ToInt32(item.BoOpen);
+                    ChandpurInvestment = ChandpurInvestment + Convert.ToInt32(item.Investment);
+                    ChandpurWithdraw = ChandpurWithdraw + Convert.ToInt32(item.Withdraw);
+                    ChandpurVisit = ChandpurVisit + Convert.ToInt32(item.Visit);
+                    ChandpurExpectedBoOpen = ChandpurExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    ChandpurZoomMeeting = ChandpurZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    ChandpurPhysicalVisit = ChandpurPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    ChandpurLeave = ChandpurLeave + Convert.ToInt32(item.Leave);
+                    ChandpurRowCount = ChandpurRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (ChandpurRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Chandpur
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ChandpurTurnover
+                    </td>
+                    <td>
+                        @ChandpurAverageClients
+                    </td>
+                    <td>
+                        @ChandpurBoOpen
+                    </td>
+                    <td>
+                        @ChandpurInvestment
+                    </td>
+                    <td>
+                        @ChandpurWithdraw
+                    </td>
+                    <td>
+                        @ChandpurVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @ChandpurExpectedBoOpen
+                    </td>
+                    <td>
+                        @ChandpurZoomMeeting
+                    </td>
+                    <td>
+                        @ChandpurPhysicalVisit
+                    </td>
+                    <td>
+                        @ChandpurLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var JessoreTurnover = 0;
+            var JessoreAverageClients = 0;
+            var JessoreBoOpen = 0;
+            var JessoreInvestment = 0;
+            var JessoreWithdraw = 0;
+            var JessoreVisit = 0;
+            var JessoreExpectedBoOpen = 0;
+            var JessoreZoomMeeting = 0;
+            var JessorePhysicalVisit = 0;
+            var JessoreLeave = 0;
+            var JessoreRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 23)
+                {
+                    JessoreTurnover = JessoreTurnover + Convert.ToInt32(item.Turnover);
+                    JessoreAverageClients = JessoreAverageClients + item.AverageClients;
+                    JessoreBoOpen = JessoreBoOpen + Convert.ToInt32(item.BoOpen);
+                    JessoreInvestment = JessoreInvestment + Convert.ToInt32(item.Investment);
+                    JessoreWithdraw = JessoreWithdraw + Convert.ToInt32(item.Withdraw);
+                    JessoreVisit = JessoreVisit + Convert.ToInt32(item.Visit);
+                    JessoreExpectedBoOpen = JessoreExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    JessoreZoomMeeting = JessoreZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    JessorePhysicalVisit = JessorePhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    JessoreLeave = JessoreLeave + Convert.ToInt32(item.Leave);
+                    JessoreRowCount = JessoreRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (JessoreRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Jessore
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @JessoreTurnover
+                    </td>
+                    <td>
+                        @JessoreAverageClients
+                    </td>
+                    <td>
+                        @JessoreBoOpen
+                    </td>
+                    <td>
+                        @JessoreInvestment
+                    </td>
+                    <td>
+                        @JessoreWithdraw
+                    </td>
+                    <td>
+                        @JessoreVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @JessoreExpectedBoOpen
+                    </td>
+                    <td>
+                        @JessoreZoomMeeting
+                    </td>
+                    <td>
+                        @JessorePhysicalVisit
+                    </td>
+                    <td>
+                        @JessoreLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var KeranigonjTurnover = 0;
+            var KeranigonjAverageClients = 0;
+            var KeranigonjBoOpen = 0;
+            var KeranigonjInvestment = 0;
+            var KeranigonjWithdraw = 0;
+            var KeranigonjVisit = 0;
+            var KeranigonjExpectedBoOpen = 0;
+            var KeranigonjZoomMeeting = 0;
+            var KeranigonjPhysicalVisit = 0;
+            var KeranigonjLeave = 0;
+            var KeranigonjRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 24)
+                {
+                    KeranigonjTurnover = KeranigonjTurnover + Convert.ToInt32(item.Turnover);
+                    KeranigonjAverageClients = KeranigonjAverageClients + item.AverageClients;
+                    KeranigonjBoOpen = KeranigonjBoOpen + Convert.ToInt32(item.BoOpen);
+                    KeranigonjInvestment = KeranigonjInvestment + Convert.ToInt32(item.Investment);
+                    KeranigonjWithdraw = KeranigonjWithdraw + Convert.ToInt32(item.Withdraw);
+                    KeranigonjVisit = KeranigonjVisit + Convert.ToInt32(item.Visit);
+                    KeranigonjExpectedBoOpen = KeranigonjExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    KeranigonjZoomMeeting = KeranigonjZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    KeranigonjPhysicalVisit = KeranigonjPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    KeranigonjLeave = KeranigonjLeave + Convert.ToInt32(item.Leave);
+                    KeranigonjRowCount = KeranigonjRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (KeranigonjRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Keranigonj
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @KeranigonjTurnover
+                    </td>
+                    <td>
+                        @KeranigonjAverageClients
+                    </td>
+                    <td>
+                        @KeranigonjBoOpen
+                    </td>
+                    <td>
+                        @KeranigonjInvestment
+                    </td>
+                    <td>
+                        @KeranigonjWithdraw
+                    </td>
+                    <td>
+                        @KeranigonjVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @KeranigonjExpectedBoOpen
+                    </td>
+                    <td>
+                        @KeranigonjZoomMeeting
+                    </td>
+                    <td>
+                        @KeranigonjPhysicalVisit
+                    </td>
+                    <td>
+                        @KeranigonjLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var PatuakhaliTurnover = 0;
+            var PatuakhaliAverageClients = 0;
+            var PatuakhaliBoOpen = 0;
+            var PatuakhaliInvestment = 0;
+            var PatuakhaliWithdraw = 0;
+            var PatuakhaliVisit = 0;
+            var PatuakhaliExpectedBoOpen = 0;
+            var PatuakhaliZoomMeeting = 0;
+            var PatuakhaliPhysicalVisit = 0;
+            var PatuakhaliLeave = 0;
+            var PatuakhaliRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 25)
+                {
+                    PatuakhaliTurnover = PatuakhaliTurnover + Convert.ToInt32(item.Turnover);
+                    PatuakhaliAverageClients = PatuakhaliAverageClients + item.AverageClients;
+                    PatuakhaliBoOpen = PatuakhaliBoOpen + Convert.ToInt32(item.BoOpen);
+                    PatuakhaliInvestment = PatuakhaliInvestment + Convert.ToInt32(item.Investment);
+                    PatuakhaliWithdraw = PatuakhaliWithdraw + Convert.ToInt32(item.Withdraw);
+                    PatuakhaliVisit = PatuakhaliVisit + Convert.ToInt32(item.Visit);
+                    PatuakhaliExpectedBoOpen = PatuakhaliExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    PatuakhaliZoomMeeting = PatuakhaliZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    PatuakhaliPhysicalVisit = PatuakhaliPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    PatuakhaliLeave = PatuakhaliLeave + Convert.ToInt32(item.Leave);
+                    PatuakhaliRowCount = PatuakhaliRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (PatuakhaliRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Patuakhali
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @PatuakhaliTurnover
+                    </td>
+                    <td>
+                        @PatuakhaliAverageClients
+                    </td>
+                    <td>
+                        @PatuakhaliBoOpen
+                    </td>
+                    <td>
+                        @PatuakhaliInvestment
+                    </td>
+                    <td>
+                        @PatuakhaliWithdraw
+                    </td>
+                    <td>
+                        @PatuakhaliVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @PatuakhaliExpectedBoOpen
+                    </td>
+                    <td>
+                        @PatuakhaliZoomMeeting
+                    </td>
+                    <td>
+                        @PatuakhaliPhysicalVisit
+                    </td>
+                    <td>
+                        @PatuakhaliLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var SirajganjTurnover = 0;
+            var SirajganjAverageClients = 0;
+            var SirajganjBoOpen = 0;
+            var SirajganjInvestment = 0;
+            var SirajganjWithdraw = 0;
+            var SirajganjVisit = 0;
+            var SirajganjExpectedBoOpen = 0;
+            var SirajganjZoomMeeting = 0;
+            var SirajganjPhysicalVisit = 0;
+            var SirajganjLeave = 0;
+            var SirajganjRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 26)
+                {
+                    SirajganjTurnover = SirajganjTurnover + Convert.ToInt32(item.Turnover);
+                    SirajganjAverageClients = SirajganjAverageClients + item.AverageClients;
+                    SirajganjBoOpen = SirajganjBoOpen + Convert.ToInt32(item.BoOpen);
+                    SirajganjInvestment = SirajganjInvestment + Convert.ToInt32(item.Investment);
+                    SirajganjWithdraw = SirajganjWithdraw + Convert.ToInt32(item.Withdraw);
+                    SirajganjVisit = SirajganjVisit + Convert.ToInt32(item.Visit);
+                    SirajganjExpectedBoOpen = SirajganjExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    SirajganjZoomMeeting = SirajganjZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    SirajganjPhysicalVisit = SirajganjPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    SirajganjLeave = SirajganjLeave + Convert.ToInt32(item.Leave);
+                    SirajganjRowCount = SirajganjRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (SirajganjRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Sirajganj
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @SirajganjTurnover
+                    </td>
+                    <td>
+                        @SirajganjAverageClients
+                    </td>
+                    <td>
+                        @SirajganjBoOpen
+                    </td>
+                    <td>
+                        @SirajganjInvestment
+                    </td>
+                    <td>
+                        @SirajganjWithdraw
+                    </td>
+                    <td>
+                        @SirajganjVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @SirajganjExpectedBoOpen
+                    </td>
+                    <td>
+                        @SirajganjZoomMeeting
+                    </td>
+                    <td>
+                        @SirajganjPhysicalVisit
+                    </td>
+                    <td>
+                        @SirajganjLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var TejgaonTurnover = 0;
+            var TejgaonAverageClients = 0;
+            var TejgaonBoOpen = 0;
+            var TejgaonInvestment = 0;
+            var TejgaonWithdraw = 0;
+            var TejgaonVisit = 0;
+            var TejgaonExpectedBoOpen = 0;
+            var TejgaonZoomMeeting = 0;
+            var TejgaonPhysicalVisit = 0;
+            var TejgaonLeave = 0;
+            var TejgaonRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 27)
+                {
+                    TejgaonTurnover = TejgaonTurnover + Convert.ToInt32(item.Turnover);
+                    TejgaonAverageClients = TejgaonAverageClients + item.AverageClients;
+                    TejgaonBoOpen = TejgaonBoOpen + Convert.ToInt32(item.BoOpen);
+                    TejgaonInvestment = TejgaonInvestment + Convert.ToInt32(item.Investment);
+                    TejgaonWithdraw = TejgaonWithdraw + Convert.ToInt32(item.Withdraw);
+                    TejgaonVisit = TejgaonVisit + Convert.ToInt32(item.Visit);
+                    TejgaonExpectedBoOpen = TejgaonExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    TejgaonZoomMeeting = TejgaonZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    TejgaonPhysicalVisit = TejgaonPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    TejgaonLeave = TejgaonLeave + Convert.ToInt32(item.Leave);
+                    TejgaonRowCount = TejgaonRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (TejgaonRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Tejgaon
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @TejgaonTurnover
+                    </td>
+                    <td>
+                        @TejgaonAverageClients
+                    </td>
+                    <td>
+                        @TejgaonBoOpen
+                    </td>
+                    <td>
+                        @TejgaonInvestment
+                    </td>
+                    <td>
+                        @TejgaonWithdraw
+                    </td>
+                    <td>
+                        @TejgaonVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @TejgaonExpectedBoOpen
+                    </td>
+                    <td>
+                        @TejgaonZoomMeeting
+                    </td>
+                    <td>
+                        @TejgaonPhysicalVisit
+                    </td>
+                    <td>
+                        @TejgaonLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var TangailTurnover = 0;
+            var TangailAverageClients = 0;
+            var TangailBoOpen = 0;
+            var TangailInvestment = 0;
+            var TangailWithdraw = 0;
+            var TangailVisit = 0;
+            var TangailExpectedBoOpen = 0;
+            var TangailZoomMeeting = 0;
+            var TangailPhysicalVisit = 0;
+            var TangailLeave = 0;
+            var TangailRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 28)
+                {
+                    TangailTurnover = TangailTurnover + Convert.ToInt32(item.Turnover);
+                    TangailAverageClients = TangailAverageClients + item.AverageClients;
+                    TangailBoOpen = TangailBoOpen + Convert.ToInt32(item.BoOpen);
+                    TangailInvestment = TangailInvestment + Convert.ToInt32(item.Investment);
+                    TangailWithdraw = TangailWithdraw + Convert.ToInt32(item.Withdraw);
+                    TangailVisit = TangailVisit + Convert.ToInt32(item.Visit);
+                    TangailExpectedBoOpen = TangailExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    TangailZoomMeeting = TangailZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    TangailPhysicalVisit = TangailPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    TangailLeave = TangailLeave + Convert.ToInt32(item.Leave);
+                    TangailRowCount = TangailRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (TangailRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Tangail
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @TangailTurnover
+                    </td>
+                    <td>
+                        @TangailAverageClients
+                    </td>
+                    <td>
+                        @TangailBoOpen
+                    </td>
+                    <td>
+                        @TangailInvestment
+                    </td>
+                    <td>
+                        @TangailWithdraw
+                    </td>
+                    <td>
+                        @TangailVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @TangailExpectedBoOpen
+                    </td>
+                    <td>
+                        @TangailZoomMeeting
+                    </td>
+                    <td>
+                        @TangailPhysicalVisit
+                    </td>
+                    <td>
+                        @TangailLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        @{
+
+            var TongiTurnover = 0;
+            var TongiAverageClients = 0;
+            var TongiBoOpen = 0;
+            var TongiInvestment = 0;
+            var TongiWithdraw = 0;
+            var TongiVisit = 0;
+            var TongiExpectedBoOpen = 0;
+            var TongiZoomMeeting = 0;
+            var TongiPhysicalVisit = 0;
+            var TongiLeave = 0;
+            var TongiRowCount = 0;
+
+            foreach (var item in Model)
+            {
+                if (item.BranceSetting.BranceId == 29)
+                {
+                    TongiTurnover = TongiTurnover + Convert.ToInt32(item.Turnover);
+                    TongiAverageClients = TongiAverageClients + item.AverageClients;
+                    TongiBoOpen = TongiBoOpen + Convert.ToInt32(item.BoOpen);
+                    TongiInvestment = TongiInvestment + Convert.ToInt32(item.Investment);
+                    TongiWithdraw = TongiWithdraw + Convert.ToInt32(item.Withdraw);
+                    TongiVisit = TongiVisit + Convert.ToInt32(item.Visit);
+                    TongiExpectedBoOpen = TongiExpectedBoOpen + Convert.ToInt32(item.ExpectedBoOpen);
+                    TongiZoomMeeting = TongiZoomMeeting + Convert.ToInt32(item.ZoomMeeting);
+                    TongiPhysicalVisit = TongiPhysicalVisit + Convert.ToInt32(item.PhysicalVisit);
+                    TongiLeave = TongiLeave + Convert.ToInt32(item.Leave);
+                    TongiRowCount = TongiRowCount + 1;
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trader)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BranceSetting.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turnover)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageClients)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Withdraw)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientsNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpectedBoOpen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZoomMeeting)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhysicalVisit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        @if (userInfo == "Admin")
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="d-inline-flex">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            if (TongiRowCount > 1)
+            {
+                <tr>
+
+                    <td>
+                        Tongi
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @TongiTurnover
+                    </td>
+                    <td>
+                        @TongiAverageClients
+                    </td>
+                    <td>
+                        @TongiBoOpen
+                    </td>
+                    <td>
+                        @TongiInvestment
+                    </td>
+                    <td>
+                        @TongiWithdraw
+                    </td>
+                    <td>
+                        @TongiVisit
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @TongiExpectedBoOpen
+                    </td>
+                    <td>
+                        @TongiZoomMeeting
+                    </td>
+                    <td>
+                        @TongiPhysicalVisit
+                    </td>
+                    <td>
+                        @TongiLeave
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+            }
+        }
+        <tr>
+
+            <td>
+                Total
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                @Model.Sum(c=>c.Turnover)
+            </td>
+            <td>
+                @Model.Sum(c=>c.AverageClients)
+            </td>
+            <td>
+                @Model.Sum(c=>c.BoOpen)
+            </td>
+            <td>
+                @Model.Sum(c=>c.Investment)
+            </td>
+            <td>
+                @Model.Sum(c=>c.Withdraw)
+            </td>
+            <td>
+                @Model.Sum(c=>c.Visit)
+            </td>
+            <td>
+            </td>
+            <td>
+                @Model.Sum(c=>c.ExpectedBoOpen)
+            </td>
+            <td>
+                @Model.Sum(c=>c.ZoomMeeting)
+            </td>
+            <td>
+                @Model.Sum(c=>c.PhysicalVisit)
+            </td>
+            <td>
+                @Model.Sum(c=>c.Leave)
+            </td>
+            <td>
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var today = new Date().toISOString().split('T')[0];
+            $('#myTableActivitiesReports').DataTable({
+                "ordering": false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: today,
+                        message: "Weely Branch or Digital Booth Activities Report"
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: today,
+                        message: "Weely Branch or Digital Booth Activities Report"
+                    }
+
+
+                ]
+            }
+            );
+        });
+
+    </script>
+}
